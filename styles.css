@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#moodList {
+    margin-top: 20px;
+}
+
+.mood-entry {
+    margin: 10px 0;
+}
+
+.dark-theme {
+    background-color: #333;
+    color: white;
+}
+
+.light-theme {
+    background-color: white;
+    color: black;
+}
