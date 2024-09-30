@@ -9,10 +9,10 @@
 <body>
     <h1>Add Notes</h1>
     <form id="moodForm">
-        <textarea id="moodInput" placeholder="Describe your mood..." required></textarea>
+        <textarea id="moodInput" placeholder="Describe your mood or task..." required></textarea>
         <br>
-        <label for="moodSelector">Mood Level:</label>
-        <select id="moodSelector" required>
+        <label for="moodSelector">Mood Level (optional):</label>
+        <select id="moodSelector">
             <option value="">Select level</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -26,19 +26,35 @@
             <option value="10">10</option>
         </select>
         <br>
-        <label for="activitySelector">Category:</label>
-        <select id="activitySelector" required>
+        <label for="activitySelector">Category (optional):</label>
+        <select id="activitySelector">
             <option value="">Select category</option>
             <option value="Physical Activity">Physical Activity</option>
             <option value="Work">Work</option>
             <option value="Entertainment">Entertainment</option>
         </select>
         <br>
+        <label for="todoCheckbox">Mark as To-Do:</label>
+        <input type="checkbox" id="todoCheckbox">
+        <br>
         <button type="submit">Save Entry</button>
     </form>
     <button id="exportBtn">Export to CSV</button>
     <button id="toggleTheme">Toggle Theme</button>
+    <button id="filterBtn">Filter by Category</button>
+    <select id="categoryFilter">
+        <option value="">All categories</option>
+        <option value="Physical Activity">Physical Activity</option>
+        <option value="Work">Work</option>
+        <option value="Entertainment">Entertainment</option>
+    </select>
+    
+    <h2>Entries</h2>
     <div id="moodList"></div>
+    
+    <h2>To-Do List</h2>
+    <div id="todoList"></div>
+    
     <div id="moodAdvice"></div>
     <script src="script.js"></script>
 </body>
