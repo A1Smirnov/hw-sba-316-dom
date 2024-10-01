@@ -1,21 +1,172 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+    color: #333;
 }
 
-#moodList {
-    margin-top: 20px;
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #4A90E2;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+#nav-icons {
+    display: flex;
+    align-items: center;
+}
+
+#nav-icons button {
+    background: none;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+    position: relative;
+}
+
+#nav-icons img {
+    width: 24px;
+    height: 24px;
+}
+
+#nav-icons input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    color: #4A90E2;
+    font-weight: bold;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #666;
+}
+
+textarea, select, input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+textarea:focus, select:focus, input[type="checkbox"]:focus {
+    border-color: #4A90E2;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #4A90E2;
+    color: #ffffff;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #357ABD;
+}
+
+#moodList, #todoList {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0;
 }
 
 .mood-entry {
-    margin: 10px 0;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mood-entry:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mood-entry strong {
+    display: block;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.todo-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.todo-checkbox label {
+    margin-right: 10px;
 }
 
 .dark-theme {
     background-color: #333;
-    color: white;
+    color: #fff;
 }
 
-.light-theme {
-    background-color: white;
-    color: black;
+.dark-theme button {
+    background-color: #555;
+}
+
+.dark-theme button:hover {
+    background-color: #777;
+}
+
+.dark-theme .mood-entry {
+    background-color: #444;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+    form, #moodList, #todoList {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    button, textarea, select {
+        font-size: 16px;
+        padding: 12px;
+    }
 }

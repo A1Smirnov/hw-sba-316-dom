@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav id="navbar">
+        <div id="logo">ReNote</div>
+        <div id="nav-icons">
+            <button id="exportBtn" title="Export to CSV">
+                <img src="images/nav-icon2.png" alt="Export CSV">
+            </button>
+            <button id="toggleTheme" title="Toggle Theme">
+                <img src="images/nav-icon1.png" alt="Toggle Theme">
+            </button>
+            <button id="loginBtn" title="Log In">
+                <img src="images/nav-icon3.png" alt="Log In">
+            </button>
+            <button id="uploadCsvBtn" title="Upload CSV">
+                <img src="images/nav-icon4.png" alt="Upload CSV">
+                <input type="file" id="uploadCsvInput" accept=".csv" style="display: none;">
+            </button>
+        </div>
+    </nav>
+
     <h1>Add Notes</h1>
     <form id="moodForm">
         <textarea id="moodInput" placeholder="Describe your mood or task..." required></textarea>
@@ -34,20 +53,13 @@
             <option value="Entertainment">Entertainment</option>
         </select>
         <br>
-        <label for="todoCheckbox">Mark as To-Do:</label>
-        <input type="checkbox" id="todoCheckbox">
+        <div class="todo-checkbox">
+            <label for="todoCheckbox">Mark as To-Do:</label>
+            <input type="checkbox" id="todoCheckbox">
+        </div>
         <br>
         <button type="submit">Save Entry</button>
     </form>
-    <button id="exportBtn">Export to CSV</button>
-    <button id="toggleTheme">Toggle Theme</button>
-    <button id="filterBtn">Filter by Category</button>
-    <select id="categoryFilter">
-        <option value="">All categories</option>
-        <option value="Physical Activity">Physical Activity</option>
-        <option value="Work">Work</option>
-        <option value="Entertainment">Entertainment</option>
-    </select>
     
     <h2>Entries</h2>
     <div id="moodList"></div>
