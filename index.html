@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Notes</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav id="navbar">
-        <div id="logo">ReNote</div>
+        <div id="logo">
+            <img src="images/Logo.png" alt="ReNote Logo" style="height: 40px;">
+        </div>
         <div id="nav-icons">
             <button id="exportBtn" title="Export to CSV">
                 <img src="images/nav-icon2.png" alt="Export CSV">
@@ -28,6 +33,7 @@
 
     <h1>Add Notes</h1>
     <form id="moodForm">
+        <button type="submit">Save Entry</button>
         <textarea id="moodInput" placeholder="Describe your mood or task..." required></textarea>
         <br>
         <label for="moodSelector">Mood Level (optional):</label>
@@ -58,7 +64,6 @@
             <input type="checkbox" id="todoCheckbox">
         </div>
         <br>
-        <button type="submit">Save Entry</button>
     </form>
     
     <h2>Entries</h2>
