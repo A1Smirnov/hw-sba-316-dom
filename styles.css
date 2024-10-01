@@ -1,7 +1,7 @@
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
-    padding: 0px;
+    padding: 0;
     background-color: #f4f4f9;
     color: #333;
 }
@@ -18,12 +18,25 @@ body {
     z-index: 1000;
 }
 
-#nav-icons {
+#logo {
     display: flex;
     align-items: center;
 }
 
+#logo img {
+    height: 40px;
+    margin-right: 10px;
+}
 
+#logo span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#nav-icons {
+    display: flex;
+    align-items: center;
+}
 
 #nav-icons button {
     background: none;
@@ -48,36 +61,39 @@ body {
     cursor: pointer;
 }
 
-
-#logo {
-    font-size: 24px;
-    font-weight: bold;
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
 }
 
-h1 {
-    text-align: center;
-    color: #4A90E2;
-    font-weight: bold;
+.entries-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.entries-container h2 {
+    margin-top: 0;
+}
+
+#moodList, #todoList {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 form {
-    max-width: 600px;
-    margin: 20px auto;
+    flex: 1;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #666;
-}
-
-textarea, select, input[type="checkbox"] {
-    width: 100%;
+textarea#moodInput {
+    width: 97%;
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
@@ -91,7 +107,7 @@ textarea:focus, select:focus, input[type="checkbox"]:focus {
     outline: none;
 }
 
-button {
+button[type="submit"] {
     width: 100%;
     padding: 15px;
     background-color: #4A90E2;
@@ -104,44 +120,18 @@ button {
     margin-bottom: 10px;
 }
 
-button:hover {
+button[type="submit"]:hover {
     background-color: #357ABD;
-}
-
-#moodList, #todoList {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 0;
-}
-
-.mood-entry {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.mood-entry:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.mood-entry strong {
-    display: block;
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 5px;
 }
 
 .todo-checkbox {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .todo-checkbox label {
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .dark-theme {
@@ -160,16 +150,4 @@ button:hover {
 .dark-theme .mood-entry {
     background-color: #444;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-@media (max-width: 600px) {
-    form, #moodList, #todoList {
-        width: 100%;
-        padding: 10px;
-    }
-    
-    button, textarea, select {
-        font-size: 16px;
-        padding: 12px;
-    }
 }

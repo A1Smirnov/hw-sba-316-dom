@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Notes</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" sizes="32x32" href="images/favicon/favicon-32.png">
+    <link rel="icon" sizes="16x16" href="images/favicon/favicon-16.png">
+    <link rel="icon" sizes="96x96" href="images/favicon/favicon-96.png">
 </head>
 <body>
     <nav id="navbar">
         <div id="logo">
-            <img src="images/Logo.png" alt="ReNote Logo" style="height: 40px;">
+            <img src="images/Logo.png" alt="Logo" />
+            <span>ReNote</span>
         </div>
         <div id="nav-icons">
             <button id="exportBtn" title="Export to CSV">
@@ -31,48 +32,48 @@
         </div>
     </nav>
 
-    <h1>Add Notes</h1>
-    <form id="moodForm">
-        <button type="submit">Save Entry</button>
-        <textarea id="moodInput" placeholder="Describe your mood or task..." required></textarea>
-        <br>
-        <label for="moodSelector">Mood Level (optional):</label>
-        <select id="moodSelector">
-            <option value="">Select level</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-        </select>
-        <br>
-        <label for="activitySelector">Category (optional):</label>
-        <select id="activitySelector">
-            <option value="">Select category</option>
-            <option value="Physical Activity">Physical Activity</option>
-            <option value="Work">Work</option>
-            <option value="Entertainment">Entertainment</option>
-        </select>
-        <br>
-        <div class="todo-checkbox">
-            <label for="todoCheckbox">Mark as To-Do:</label>
-            <input type="checkbox" id="todoCheckbox">
+    <div class="container">
+        <div class="entries-container">
+            <h2>Entries</h2>
+            <div id="moodList"></div>
+
+            <h2>To-Do List</h2>
+            <div id="todoList"></div>
+
+            <div id="moodAdvice"></div>
         </div>
-        <br>
-    </form>
-    
-    <h2>Entries</h2>
-    <div id="moodList"></div>
-    
-    <h2>To-Do List</h2>
-    <div id="todoList"></div>
-    
-    <div id="moodAdvice"></div>
+
+        <form id="moodForm">
+            <textarea id="moodInput" placeholder="Some of your drafts..." required></textarea>
+            <label for="moodSelector">Importance</label>
+            <select id="moodSelector">
+                <option value="">Select level</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <label for="activitySelector">Category:</label>
+            <select id="activitySelector">
+                <option value="">Select category</option>
+                <option value="Physical Activity">Physical Activity</option>
+                <option value="Work">Work</option>
+                <option value="Entertainment">Entertainment</option>
+            </select>
+            <div class="todo-checkbox">
+                <input type="checkbox" id="todoCheckbox">
+                <label for="todoCheckbox">Mark as To-Do:</label>
+            </div>
+            <button type="submit">Enter</button>
+        </form>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
