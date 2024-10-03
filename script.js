@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportBtn');
     const toggleTheme = document.getElementById('toggleTheme');
     
+// 
+document.getElementById('uploadCsvBtn').addEventListener('click', () => {
+    document.getElementById('uploadCsvInput').click();
+});
+
+document.getElementById('uploadCsvInput').addEventListener('change', importFromCSV);
+// 
+
     let entries = [];
     let darkTheme = false;
 
@@ -71,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function importFromCSV(event) {
         const file = event.target.files[0];
+        if (!file) return;
+    
         const reader = new FileReader();
         reader.onload = function (e) {
             const rows = e.target.result.split("\n");

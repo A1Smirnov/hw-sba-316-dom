@@ -18,19 +18,34 @@ body {
     z-index: 1000;
 }
 
+
 #logo {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 #logo img {
-    height: 40px;
-    margin-right: 10px;
+    height: 50px;
+    margin-right: 0px;
 }
+
+
+
+/* 
+
+#logo span {
+    display: flex;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+ */
 
 #logo span {
     font-size: 24px;
     font-weight: bold;
+    align-items: center;
 }
 
 #nav-icons {
@@ -92,6 +107,18 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
 textarea#moodInput {
     width: 97%;
     padding: 10px;
@@ -135,19 +162,30 @@ button[type="submit"]:hover {
 }
 
 .dark-theme {
-    background-color: #333;
-    color: #fff;
+    background-color: #222;
+    color: #ccc;
 }
 
 .dark-theme button {
-    background-color: #555;
+    background-color: #444;
+    color: #ccc;
 }
 
-.dark-theme button:hover {
-    background-color: #777;
+.dark-theme #navbar {
+    background-color: #333;
+}
+
+.dark-theme #logo span {
+    color: #fff;
 }
 
 .dark-theme .mood-entry {
     background-color: #444;
+    color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#logo a {
+    text-decoration: none;
+    color: white;
 }
