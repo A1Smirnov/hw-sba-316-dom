@@ -99,3 +99,77 @@ document.getElementById('uploadCsvInput').addEventListener('change', importFromC
         document.body.className = darkTheme ? 'dark-theme' : 'light-theme';
     }
 });
+
+function displayEntry(entry, index) {
+    const entryContainer = document.createElement('div');
+    entryContainer.className = 'mood-entry';
+    entryContainer.innerHTML = `
+        <strong>${entry.date}</strong>: ${entry.moodText} 
+        ${entry.moodLevel ? `(Level: ${entry.moodLevel})` : ''} 
+        ${entry.activity ? `(Category: ${entry.activity})` : ''}
+        <button class="edit-entry" data-index="${index}">Edit</button>
+        <button class="delete-entry" data-index="${index}">Delete</button>
+    `;
+
+    if (entry.isTodo) {
+        todoList.appendChild(entryContainer);
+    } else {
+        moodList.appendChild(entryContainer);
+    }
+
+    // Button listeners
+    entryContainer.querySelector('.edit-entry').addEventListener('click', () => editEntry(index));
+    entryContainer.querySelector('.delete-entry').addEventListener('click', () => deleteEntry(index));
+}
+
+function editEntry(index) {
+    const entry = entries[index];
+    moodInput.value = entry.moodText;
+    moodSelector.value = entry.moodLevel;
+    activitySelector.value = entry.activity;
+    document.getElementById('todoCheckbox').checked = entry.isTodo;
+
+    // Удаляем запись, чтобы сохранить отредактированную версию
+    deleteEntry(index);
+}
+
+function deleteEntry(index) {
+    entries.splice(index, 1);
+    updateDisplay();
+}
+
+function updateDisplay() {
+    moodList.innerHTML = '';
+    todoList.innerHTML = '';
+    entries.forEach((entry, index) => displayEntry(entry, index));
+    saveEntriesToLocalStorage();
+}
+
+
+function saveEntriesToLocalStorage() {
+    localStorage.setItem('moodEntries', JSON.stringify(entries));
+}
+
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const entry = createEntry();
+    entries.push(entry);
+    displayEntry(entry, entries.length - 1);
+    resetForm();
+    saveEntriesToLocalStorage(); // Сохраняем данные в локальное хранилище
+}
+
+function loadEntriesFromLocalStorage() {
+    const savedEntries = localStorage.getItem('moodEntries');
+    if (savedEntries) {
+        entries = JSON.parse(savedEntries);
+        entries.forEach((entry, index) => displayEntry(entry, index));
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadEntriesFromLocalStorage();
+    
+    // Остальной код инициализации
+});
