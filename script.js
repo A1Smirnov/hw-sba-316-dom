@@ -204,3 +204,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+function getUserInfo() {
+    const userInfoDiv = document.getElementById('userInfo');
+
+    // Get browser information
+    const browser = navigator.userAgent;
+    const browserName = navigator.appName;
+    const browserVersion = navigator.appVersion;
+    const platform = navigator.platform;
+
+    // Construct user info message
+    const userInfoMessage = `
+        <strong>User Information:</strong><br>
+        Browser: ${browserName} (${browser})<br>
+        Browser Version: ${browserVersion}<br>
+        Operating System: ${platform}
+    `;
+
+    // Display the user info
+    userInfoDiv.innerHTML = userInfoMessage;
+}
+
+// Call the function to display user info when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', getUserInfo);
