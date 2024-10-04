@@ -8,14 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadCsvInput = document.getElementById('uploadCsvInput');
     const exportBtn = document.getElementById('exportBtn');
     const toggleTheme = document.getElementById('toggleTheme');
-    
-// 
-document.getElementById('uploadCsvBtn').addEventListener('click', () => {
-    document.getElementById('uploadCsvInput').click();
-});
 
-document.getElementById('uploadCsvInput').addEventListener('change', importFromCSV);
-// 
+    document.getElementById('uploadCsvBtn').addEventListener('click', () => {
+        document.getElementById('uploadCsvInput').click();
+    });
 
     let entries = [];
     let darkTheme = false;
@@ -25,12 +21,16 @@ document.getElementById('uploadCsvInput').addEventListener('change', importFromC
     toggleTheme.addEventListener('click', toggleDarkTheme);
     uploadCsvInput.addEventListener('change', importFromCSV);
 
+    loadEntriesFromLocalStorage(); // Load entries on page load
+    loadTheme(); // Load saved theme
+
     function handleFormSubmit(event) {
         event.preventDefault();
         const entry = createEntry();
         entries.push(entry);
-        displayEntry(entry);
+        displayEntry(entry, entries.length - 1);
         resetForm();
+        saveEntriesToLocalStorage(); // Save to local storage
     }
 
     function createEntry() {
@@ -42,26 +42,48 @@ document.getElementById('uploadCsvInput').addEventListener('change', importFromC
         return { date, moodText, moodLevel, activity, isTodo };
     }
 
-    function displayEntry(entry) {
+    function displayEntry(entry, index) {
+        const entryFragment = document.createDocumentFragment();
         const entryContainer = document.createElement('div');
         entryContainer.className = 'mood-entry';
         entryContainer.innerHTML = `
-            <strong>${entry.date}</strong>: ${entry.moodText} 
-            ${entry.moodLevel ? `(Level: ${entry.moodLevel})` : ''} 
-            ${entry.activity ? `(Category: ${entry.activity})` : ''}`;
-
+            <strong>${entry.date}</strong>: <span class="mood-text">${entry.moodText}</span>
+            ${entry.moodLevel ? `(Level: ${entry.moodLevel})` : ''}
+            ${entry.activity ? `(Category: ${entry.activity})` : ''}
+            <button class="edit-entry" data-index="${index}">Edit</button>
+            <button class="delete-entry" data-index="${index}">Delete</button>
+        `;
+        entryFragment.appendChild(entryContainer);
         if (entry.isTodo) {
-            todoList.appendChild(entryContainer);
+            todoList.appendChild(entryFragment);
         } else {
-            moodList.appendChild(entryContainer);
+            moodList.appendChild(entryFragment);
         }
+
+        // Button listeners
+        entryContainer.querySelector('.edit-entry').addEventListener('click', () => editEntry(index));
+        entryContainer.querySelector('.delete-entry').addEventListener('click', () => deleteEntry(index));
     }
 
-    function resetForm() {
-        moodInput.value = '';
-        moodSelector.value = '';
-        activitySelector.value = '';
-        document.getElementById('todoCheckbox').checked = false;
+    function editEntry(index) {
+        const entry = entries[index];
+        moodInput.value = entry.moodText;
+        moodSelector.value = entry.moodLevel;
+        activitySelector.value = entry.activity;
+        document.getElementById('todoCheckbox').checked = entry.isTodo;
+        deleteEntry(index); // Remove to save updated entry later
+    }
+
+    function deleteEntry(index) {
+        entries.splice(index, 1);
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        moodList.innerHTML = '';
+        todoList.innerHTML = '';
+        entries.forEach((entry, index) => displayEntry(entry, index));
+        saveEntriesToLocalStorage();
     }
 
     function exportToCSV() {
@@ -80,15 +102,17 @@ document.getElementById('uploadCsvInput').addEventListener('change', importFromC
     function importFromCSV(event) {
         const file = event.target.files[0];
         if (!file) return;
-    
+
         const reader = new FileReader();
         reader.onload = function (e) {
             const rows = e.target.result.split("\n");
             rows.slice(1).forEach(row => {
                 const [date, moodText, moodLevel, activity, isTodo] = row.split(',');
-                const entry = { date, moodText, moodLevel, activity, isTodo: isTodo === 'true' };
-                entries.push(entry);
-                displayEntry(entry);
+                if (moodText && moodLevel) { // Simple validation
+                    const entry = { date, moodText, moodLevel, activity, isTodo: isTodo === 'true' };
+                    entries.push(entry);
+                    displayEntry(entry, entries.length - 1);
+                }
             });
         };
         reader.readAsText(file);
@@ -97,79 +121,43 @@ document.getElementById('uploadCsvInput').addEventListener('change', importFromC
     function toggleDarkTheme() {
         darkTheme = !darkTheme;
         document.body.className = darkTheme ? 'dark-theme' : 'light-theme';
-    }
-});
-
-function displayEntry(entry, index) {
-    const entryContainer = document.createElement('div');
-    entryContainer.className = 'mood-entry';
-    entryContainer.innerHTML = `
-        <strong>${entry.date}</strong>: ${entry.moodText} 
-        ${entry.moodLevel ? `(Level: ${entry.moodLevel})` : ''} 
-        ${entry.activity ? `(Category: ${entry.activity})` : ''}
-        <button class="edit-entry" data-index="${index}">Edit</button>
-        <button class="delete-entry" data-index="${index}">Delete</button>
-    `;
-
-    if (entry.isTodo) {
-        todoList.appendChild(entryContainer);
-    } else {
-        moodList.appendChild(entryContainer);
+        localStorage.setItem('theme', darkTheme ? 'dark' : 'light'); // Save to localStorage
     }
 
-    // Button listeners
-    entryContainer.querySelector('.edit-entry').addEventListener('click', () => editEntry(index));
-    entryContainer.querySelector('.delete-entry').addEventListener('click', () => deleteEntry(index));
-}
-
-function editEntry(index) {
-    const entry = entries[index];
-    moodInput.value = entry.moodText;
-    moodSelector.value = entry.moodLevel;
-    activitySelector.value = entry.activity;
-    document.getElementById('todoCheckbox').checked = entry.isTodo;
-
-    // Удаляем запись, чтобы сохранить отредактированную версию
-    deleteEntry(index);
-}
-
-function deleteEntry(index) {
-    entries.splice(index, 1);
-    updateDisplay();
-}
-
-function updateDisplay() {
-    moodList.innerHTML = '';
-    todoList.innerHTML = '';
-    entries.forEach((entry, index) => displayEntry(entry, index));
-    saveEntriesToLocalStorage();
-}
-
-
-function saveEntriesToLocalStorage() {
-    localStorage.setItem('moodEntries', JSON.stringify(entries));
-}
-
-
-function handleFormSubmit(event) {
-    event.preventDefault();
-    const entry = createEntry();
-    entries.push(entry);
-    displayEntry(entry, entries.length - 1);
-    resetForm();
-    saveEntriesToLocalStorage(); // Сохраняем данные в локальное хранилище
-}
-
-function loadEntriesFromLocalStorage() {
-    const savedEntries = localStorage.getItem('moodEntries');
-    if (savedEntries) {
-        entries = JSON.parse(savedEntries);
-        entries.forEach((entry, index) => displayEntry(entry, index));
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            darkTheme = savedTheme === 'dark';
+            document.body.className = darkTheme ? 'dark-theme' : 'light-theme';
+        }
     }
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadEntriesFromLocalStorage();
-    
-    // Остальной код инициализации
+    function saveEntriesToLocalStorage() {
+        localStorage.setItem('moodEntries', JSON.stringify(entries));
+    }
+
+    function loadEntriesFromLocalStorage() {
+        const savedEntries = localStorage.getItem('moodEntries');
+        if (savedEntries) {
+            entries = JSON.parse(savedEntries);
+            entries.forEach((entry, index) => displayEntry(entry, index));
+        }
+    }
+
+    // Input validation
+    moodInput.addEventListener('input', () => {
+        if (moodInput.value.trim() === '') {
+            moodInput.setCustomValidity('Mood text cannot be empty');
+        } else {
+            moodInput.setCustomValidity('');
+        }
+    });
+
+    moodSelector.addEventListener('change', () => {
+        if (moodSelector.value === '') {
+            moodSelector.setCustomValidity('Please select an importance level');
+        } else {
+            moodSelector.setCustomValidity('');
+        }
+    });
 });
