@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayEntry(entry, index) {
-        const entryFragment = document.createDocumentFragment();
         const entryContainer = document.createElement('div');
         entryContainer.className = 'mood-entry';
         entryContainer.innerHTML = `
@@ -53,17 +52,61 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="edit-entry" data-index="${index}">Edit</button>
             <button class="delete-entry" data-index="${index}">Delete</button>
         `;
-        entryFragment.appendChild(entryContainer);
+    
+        // Add entry to the respective list
         if (entry.isTodo) {
-            todoList.appendChild(entryFragment);
+            todoList.appendChild(entryContainer);
         } else {
-            moodList.appendChild(entryFragment);
+            moodList.appendChild(entryContainer);
         }
-
+    
         // Button listeners
-        entryContainer.querySelector('.edit-entry').addEventListener('click', () => editEntry(index));
+        entryContainer.querySelector('.edit-entry').addEventListener('click', () => openEditModal(index));
         entryContainer.querySelector('.delete-entry').addEventListener('click', () => deleteEntry(index));
     }
+
+
+    function openEditModal(index) {
+        const entry = entries[index];
+        document.getElementById('editMoodInput').value = entry.moodText;
+        document.getElementById('editMoodSelector').value = entry.moodLevel;
+        document.getElementById('editActivitySelector').value = entry.activity;
+        document.getElementById('editTodoCheckbox').checked = entry.isTodo;
+    
+        // Set the editing index
+        editingIndex = index;
+    
+        // Show the modal
+        document.getElementById('editModal').style.display = 'block';
+    }
+    
+document.getElementById('saveEditBtn').addEventListener('click', () => {
+    const updatedEntry = {
+        date: entries[editingIndex].date, // Keep the original date
+        moodText: document.getElementById('editMoodInput').value,
+        moodLevel: document.getElementById('editMoodSelector').value,
+        activity: document.getElementById('editActivitySelector').value,
+        isTodo: document.getElementById('editTodoCheckbox').checked // Updated To-Do status
+    };
+
+    // Update the entry
+    entries[editingIndex] = updatedEntry;
+    
+    // Refresh display and hide the modal
+    updateDisplay();
+    document.getElementById('editModal').style.display = 'none';
+});
+
+document.getElementById('closeModal').addEventListener('click', () => {
+    document.getElementById('editModal').style.display = 'none';
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // Other initialization code...
+    
+    // Hide the modal by default
+    document.getElementById('editModal').style.display = 'none';
+});
+
 
     function editEntry(index) {
         const entry = entries[index];

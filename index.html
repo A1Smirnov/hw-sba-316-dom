@@ -80,6 +80,34 @@
         </form>
     </div>
 
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <h2>Edit Entry</h2>
+            <label for="editMoodInput">Mood:</label>
+            <input type="text" id="editMoodInput" required />
+            
+            <label for="editMoodSelector">Mood Level:</label>
+            <select id="editMoodSelector">
+                <option value="">Select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+    
+            <label for="editActivitySelector">Activity:</label>
+            <input type="text" id="editActivitySelector" />
+    
+            <label for="editTodoCheckbox">To-Do:</label>
+            <input type="checkbox" id="editTodoCheckbox" />
+    
+            <button id="saveEditBtn">Save</button>
+        </div>
+    </div>
+    
+
     <script src="script.js"></script>
 </body>
 </html>
