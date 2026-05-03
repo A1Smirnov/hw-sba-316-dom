@@ -31,10 +31,7 @@ It is a browser-based notes and task tracker with local persistence and basic en
 1. Clone the repository.
 2. Open `index.html` in a browser.
 
-```bash
-git clone https://github.com/A1Smirnov/hw-sba-316-dom.git
-cd hw-sba-316-dom
-Technologies
+## Technologies
 HTML
 CSS
 JavaScript
